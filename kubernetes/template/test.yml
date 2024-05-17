@@ -1,0 +1,1254 @@
+    ---
+
+  apiVersion: &quot;apps/v1&quot;
+  kind: &quot;Deployment&quot;
+  metadata: 
+    name: &quot;order&quot;
+    labels: 
+      app: &quot;order&quot;
+    annotations: 
+      msaez.io/x: &quot;395&quot;
+      msaez.io/y: &quot;560&quot;
+  spec: 
+    selector: 
+      matchLabels: 
+        app: &quot;order&quot;
+    replicas: 1
+    template: 
+      metadata: 
+        labels: 
+          app: &quot;order&quot;
+      spec: 
+        containers: 
+          - 
+            name: &quot;order&quot;
+            image: &quot;ghcr.io/undefined&quot;
+            ports: 
+              - 
+                containerPort: 8080
+            readinessProbe: 
+              httpGet: 
+                path: &quot;/actuator/health&quot;
+                port: 8080
+              initialDelaySeconds: 10
+              timeoutSeconds: 2
+              periodSeconds: 5
+              failureThreshold: 10
+            livenessProbe: 
+              httpGet: 
+                path: &quot;/actuator/health&quot;
+                port: 8080
+              initialDelaySeconds: 120
+              timeoutSeconds: 2
+              periodSeconds: 5
+              failureThreshold: 5
+            volumeMounts: 
+              - 
+                mountPath: &quot;/data&quot;
+                name: &quot;data&quot;
+              - 
+                mountPath: &quot;/data&quot;
+                name: &quot;o-data&quot;
+              - 
+                mountPath: &quot;/data&quot;
+                name: &quot;data&quot;
+              - 
+                mountPath: &quot;/data&quot;
+                name: &quot;o-data&quot;
+        volumes: 
+          - 
+            name: &quot;data&quot;
+            persistentVolumeClaim: 
+              claimName: &quot;data&quot;
+          - 
+            name: &quot;o-data&quot;
+            persistentVolumeClaim: 
+              claimName: &quot;o-data&quot;
+          - 
+            name: &quot;data&quot;
+            persistentVolumeClaim: 
+              claimName: &quot;data&quot;
+          - 
+            name: &quot;o-data&quot;
+            persistentVolumeClaim: 
+              claimName: &quot;o-data&quot;
+
+
+---
+
+    ---
+
+  apiVersion: &quot;v1&quot;
+  kind: &quot;Service&quot;
+  metadata: 
+    name: &quot;order&quot;
+    labels: 
+      app: &quot;order&quot;
+    annotations: 
+      msaez.io/x: &quot;479&quot;
+      msaez.io/y: &quot;376&quot;
+  spec: 
+    ports: 
+      - 
+        port: 8080
+        targetPort: 8080
+    selector: 
+      app: &quot;order&quot;
+
+
+---
+
+    ---
+
+  apiVersion: &quot;apps/v1&quot;
+  kind: &quot;Deployment&quot;
+  metadata: 
+    name: &quot;delivery&quot;
+    labels: 
+      app: &quot;delivery&quot;
+      version: &quot;v2&quot;
+    annotations: 
+      msaez.io/x: &quot;595&quot;
+      msaez.io/y: &quot;560&quot;
+  spec: 
+    selector: 
+      matchLabels: 
+        app: &quot;delivery&quot;
+        version: &quot;v2&quot;
+    replicas: 1
+    template: 
+      metadata: 
+        labels: 
+          app: &quot;delivery&quot;
+          version: &quot;v2&quot;
+      spec: 
+        containers: 
+          - 
+            name: &quot;delivery&quot;
+            image: &quot;ghcr.io/undefined&quot;
+            ports: 
+              - 
+                containerPort: 8080
+            readinessProbe: 
+              httpGet: 
+                path: &quot;/actuator/health&quot;
+                port: 8080
+              initialDelaySeconds: 10
+              timeoutSeconds: 2
+              periodSeconds: 5
+              failureThreshold: 10
+            livenessProbe: 
+              httpGet: 
+                path: &quot;/actuator/health&quot;
+                port: 8080
+              initialDelaySeconds: 120
+              timeoutSeconds: 2
+              periodSeconds: 5
+              failureThreshold: 5
+            volumeMounts: 
+              - 
+                mountPath: &quot;/data&quot;
+                name: &quot;d-data&quot;
+        volumes: 
+          - 
+            name: &quot;d-data&quot;
+            persistentVolumeClaim: 
+              claimName: &quot;d-data&quot;
+
+
+---
+
+    ---
+
+  apiVersion: &quot;v1&quot;
+  kind: &quot;Service&quot;
+  metadata: 
+    name: &quot;delivery&quot;
+    labels: 
+      app: &quot;delivery&quot;
+    annotations: 
+      msaez.io/x: &quot;631&quot;
+      msaez.io/y: &quot;376&quot;
+  spec: 
+    ports: 
+      - 
+        port: 8080
+        targetPort: 8080
+    selector: 
+      app: &quot;delivery&quot;
+
+
+---
+
+    ---
+
+  apiVersion: &quot;apps/v1&quot;
+  kind: &quot;Deployment&quot;
+  metadata: 
+    name: &quot;product&quot;
+    labels: 
+      app: &quot;product&quot;
+      version: &quot;v4&quot;
+    annotations: 
+      msaez.io/x: &quot;847&quot;
+      msaez.io/y: &quot;536&quot;
+  spec: 
+    selector: 
+      matchLabels: 
+        app: &quot;product&quot;
+        version: &quot;v4&quot;
+    replicas: 1
+    template: 
+      metadata: 
+        labels: 
+          app: &quot;product&quot;
+          version: &quot;v4&quot;
+      spec: 
+        containers: 
+          - 
+            name: &quot;product&quot;
+            image: &quot;ghcr.io/undefined&quot;
+            ports: 
+              - 
+                containerPort: 8080
+            readinessProbe: 
+              httpGet: 
+                path: &quot;/actuator/health&quot;
+                port: 8080
+              initialDelaySeconds: 10
+              timeoutSeconds: 2
+              periodSeconds: 5
+              failureThreshold: 10
+            livenessProbe: 
+              httpGet: 
+                path: &quot;/actuator/health&quot;
+                port: 8080
+              initialDelaySeconds: 120
+              timeoutSeconds: 2
+              periodSeconds: 5
+              failureThreshold: 5
+            volumeMounts: 
+              - 
+                mountPath: &quot;/data&quot;
+                name: &quot;p-data&quot;
+        volumes: 
+          - 
+            name: &quot;p-data&quot;
+            persistentVolumeClaim: 
+              claimName: &quot;p-data&quot;
+
+
+---
+
+    ---
+
+  apiVersion: &quot;v1&quot;
+  kind: &quot;Service&quot;
+  metadata: 
+    name: &quot;product&quot;
+    labels: 
+      app: &quot;product&quot;
+    annotations: 
+      msaez.io/x: &quot;839&quot;
+      msaez.io/y: &quot;356&quot;
+  spec: 
+    ports: 
+      - 
+        port: 8080
+        targetPort: 8080
+    selector: 
+      app: &quot;product&quot;
+
+
+---
+
+    ---
+
+  apiVersion: &quot;networking.k8s.io/v1&quot;
+  kind: &quot;Ingress&quot;
+  metadata: 
+    name: &quot;ingress&quot;
+    annotations: 
+      kubernetes.io/ingress.class: &quot;nginx&quot;
+      msaez.io/x: &quot;694&quot;
+      msaez.io/y: &quot;156&quot;
+      msaez.io/width: &quot;502&quot;
+      msaez.io/height: &quot;42&quot;
+  spec: 
+    rules: 
+      - 
+        host: &quot;&quot;
+        http: 
+          paths: 
+            - 
+              path: &quot;/orders&quot;
+              pathType: &quot;Prefix&quot;
+              backend: 
+                service: 
+                  name: &quot;order&quot;
+                  port: 
+                    number: 8080
+            - 
+              path: &quot;/products&quot;
+              pathType: &quot;Prefix&quot;
+              backend: 
+                service: 
+                  name: &quot;product&quot;
+                  port: 
+                    number: 8080
+            - 
+              path: &quot;/deliveries&quot;
+              pathType: &quot;Prefix&quot;
+              backend: 
+                service: 
+                  name: &quot;delivery&quot;
+                  port: 
+                    number: 8080
+
+
+---
+
+    ---
+
+  apiVersion: &quot;v1&quot;
+  kind: &quot;PersistentVolumeClaim&quot;
+  metadata: 
+    name: &quot;data&quot;
+    annotations: 
+      msaez.io/x: &quot;191&quot;
+      msaez.io/y: &quot;526&quot;
+  spec: 
+    accessModes: 
+      - &quot;ReadWriteOnce&quot;
+    resources: 
+      requests: 
+        storage: &quot;10Gi&quot;
+    volumeMode: &quot;Filesystem&quot;
+
+
+---
+
+    ---
+
+  apiVersion: &quot;storage.k8s.io/v1&quot;
+  kind: &quot;StorageClass&quot;
+  metadata: 
+    name: &quot;&quot;
+    annotations: 
+      msaez.io/x: &quot;483&quot;
+      msaez.io/y: &quot;553&quot;
+  provisioner: &quot;&quot;
+  parameters: 
+    type: &quot;gp2&quot;
+  reclaimPolicy: &quot;Delete&quot;
+
+
+---
+
+    ---
+
+  apiVersion: &quot;v1&quot;
+  kind: &quot;PersistentVolume&quot;
+  metadata: 
+    name: &quot;&quot;
+  spec: 
+    accessModes: 
+      - &quot;&quot;
+    capacity: 
+      storage: &quot;1Gi&quot;
+    persistentVolumeReclaimPolicy: &quot;&quot;
+    volumeMode: &quot;Filesystem&quot;
+    hostPath: 
+      path: &quot;/tmp&quot;
+
+
+---
+
+    ---
+
+  apiVersion: &quot;batch/v1beta1&quot;
+  kind: &quot;CronJob&quot;
+  metadata: 
+    name: &quot;&quot;
+  spec: 
+    jobTemplate: 
+      spec: 
+        template: 
+          spec: 
+            containers: 
+              - 
+                name: &quot;&quot;
+                image: &quot;&quot;
+            restartPolicy: &quot;OnFailure&quot;
+    schedule: &quot;*/1 * * * *&quot;
+
+
+---
+
+    ---
+
+  apiVersion: &quot;v1&quot;
+  kind: &quot;PersistentVolumeClaim&quot;
+  metadata: 
+    name: &quot;o-data&quot;
+    annotations: 
+      msaez.io/x: &quot;289&quot;
+      msaez.io/y: &quot;468&quot;
+  spec: 
+    accessModes: 
+      - &quot;ReadWriteOnce&quot;
+    resources: 
+      requests: 
+        storage: &quot;10Gi&quot;
+    storageClassName: &quot;&quot;
+    volumeMode: &quot;Filesystem&quot;
+
+
+---
+
+    ---
+
+  apiVersion: &quot;v1&quot;
+  kind: &quot;PersistentVolumeClaim&quot;
+  metadata: 
+    name: &quot;d-data&quot;
+    annotations: 
+      msaez.io/x: &quot;483&quot;
+      msaez.io/y: &quot;472&quot;
+  spec: 
+    accessModes: 
+      - &quot;ReadWriteOnce&quot;
+    resources: 
+      requests: 
+        storage: &quot;10Gi&quot;
+    storageClassName: &quot;&quot;
+    volumeMode: &quot;Filesystem&quot;
+
+
+---
+
+    ---
+
+  apiVersion: &quot;v1&quot;
+  kind: &quot;PersistentVolumeClaim&quot;
+  metadata: 
+    name: &quot;p-data&quot;
+    annotations: 
+      msaez.io/x: &quot;674&quot;
+      msaez.io/y: &quot;473&quot;
+  spec: 
+    accessModes: 
+      - &quot;ReadWriteOnce&quot;
+    resources: 
+      requests: 
+        storage: &quot;10Gi&quot;
+    storageClassName: &quot;&quot;
+    volumeMode: &quot;Filesystem&quot;
+
+
+---
+
+    ---
+
+  apiVersion: &quot;networking.istio.io/v1alpha3&quot;
+  kind: &quot;Gateway&quot;
+  metadata: 
+    name: &quot;mall-gateway&quot;
+    annotations: 
+      msaez.io/x: &quot;603&quot;
+      msaez.io/y: &quot;106&quot;
+      msaez.io/width: &quot;492&quot;
+      msaez.io/height: &quot;54&quot;
+  spec: 
+    selector: 
+      istio: &quot;ingressgateway&quot;
+    servers: 
+      - 
+        port: 
+          number: 80
+          name: &quot;&quot;
+          protocol: &quot;HTTP&quot;
+        hosts: 
+          - &quot;*&quot;
+
+
+---
+
+    ---
+
+  apiVersion: &quot;networking.istio.io/v1alpha3&quot;
+  kind: &quot;VirtualService&quot;
+  metadata: 
+    name: &quot;canary&quot;
+    annotations: 
+      msaez.io/y: &quot;278&quot;
+      msaez.io/x: &quot;535&quot;
+      msaez.io/DestinationRuleSubset_stable-v1: &quot;[[485,280],[432,280],[432,469]]&quot;
+      msaez.io/DestinationRuleSubset_canary-v1: &quot;[[536,328],[536,469]]&quot;
+  spec: 
+    hosts: 
+      - &quot;*&quot;
+    http: 
+      - 
+        name: &quot;&quot;
+        route: 
+          - 
+            destination: 
+              host: &quot;product&quot;
+          - 
+            destination: 
+              host: &quot;delivery&quot;
+          - 
+            destination: 
+              host: &quot;delivery&quot;
+          - 
+            destination: 
+              host: &quot;product&quot;
+          - 
+            destination: 
+              host: &quot;delivery&quot;
+          - 
+            destination: 
+              host: &quot;product&quot;
+          - 
+            destination: 
+              host: &quot;delivery&quot;
+        match: 
+          - 
+            uri: 
+              prefix: &quot;/&quot;
+        rewrite: 
+          uri: &quot;/&quot;
+    gateways: 
+      - &quot;main-gw&quot;
+
+
+---
+
+    ---
+
+  apiVersion: &quot;networking.istio.io/v1alpha3&quot;
+  kind: &quot;Gateway&quot;
+  metadata: 
+    name: &quot;main-gw&quot;
+    annotations: 
+      msaez.io/y: &quot;47&quot;
+      msaez.io/x: &quot;982&quot;
+      msaez.io/VirtualService_canary: &quot;[[536,156],[536,228]]&quot;
+  spec: 
+    selector: 
+      istio: &quot;ingressgateway&quot;
+    servers: 
+      - 
+        port: 
+          number: 80
+          name: &quot;http&quot;
+          protocol: &quot;HTTP&quot;
+        hosts: 
+          - &quot;*&quot;
+
+
+---
+
+    ---
+
+  apiVersion: &quot;networking.istio.io/v1alpha3&quot;
+  kind: &quot;DestinationRule&quot;
+  metadata: 
+    name: &quot;drule-order&quot;
+    annotations: 
+      msaez.io/y: &quot;390&quot;
+      msaez.io/x: &quot;267&quot;
+      msaez.io/height: &quot;176&quot;
+      msaez.io/width: &quot;250&quot;
+  spec: 
+    host: &quot;order&quot;
+    subsets: []
+  aapiVersion: &quot;networking.istio.io/v1alpha3&quot;
+  anapiVersion: &quot;networking.istio.io/v1alpha3&quot;
+  anaapiVersion: &quot;networking.istio.io/v1alpha3&quot;
+  anarapiVersion: &quot;networking.istio.io/v1alpha3&quot;
+  anaryapiVersion: &quot;networking.istio.io/v1alpha3&quot;
+
+
+---
+
+    ---
+null
+
+
+---
+
+    ---
+null
+
+
+---
+
+    ---
+
+  apiVersion: &quot;networking.istio.io/v1alpha3&quot;
+  kind: &quot;VirtualService&quot;
+  metadata: 
+    name: &quot;vs-order&quot;
+    annotations: 
+      msaez.io/x: &quot;394&quot;
+      msaez.io/y: &quot;249&quot;
+  spec: 
+    hosts: 
+      - &quot;*&quot;
+    gateways: 
+      - &quot;mall-gateway&quot;
+    http: 
+      - 
+        match: 
+          - 
+            uri: null
+            prefix: &quot;/orders&quot;
+        route: 
+          - 
+            destination: 
+              host: &quot;order&quot;
+
+
+---
+
+    ---
+
+  apiVersion: &quot;networking.istio.io/v1alpha3&quot;
+  kind: &quot;VirtualService&quot;
+  metadata: 
+    name: &quot;vs-delivery&quot;
+    annotations: 
+      msaez.io/x: &quot;394&quot;
+      msaez.io/y: &quot;249&quot;
+  spec: 
+    hosts: 
+      - &quot;*&quot;
+    gateways: 
+      - &quot;mall-gateway&quot;
+    http: 
+      - 
+        match: 
+          - 
+            uri: null
+            prefix: &quot;/deliveries&quot;
+        route: 
+          - 
+            destination: 
+              host: &quot;delivery&quot;
+
+
+---
+
+    ---
+
+  apiVersion: &quot;networking.istio.io/v1alpha3&quot;
+  kind: &quot;VirtualService&quot;
+  metadata: 
+    name: &quot;vs-product&quot;
+    annotations: 
+      msaez.io/x: &quot;310&quot;
+      msaez.io/y: &quot;269&quot;
+  spec: 
+    hosts: 
+      - &quot;*&quot;
+    gateways: 
+      - &quot;mall-gateway&quot;
+    http: 
+      - 
+        match: 
+          - 
+            uri: null
+            prefix: &quot;/products&quot;
+        route: 
+          - 
+            destination: 
+              host: &quot;product&quot;
+              port: 
+                number: 8080
+
+
+---
+
+    ---
+
+  apiVersion: &quot;networking.istio.io/v1alpha3&quot;
+  kind: &quot;VirtualService&quot;
+  metadata: 
+    name: &quot;vs-order&quot;
+    annotations: 
+      msaez.io/y: &quot;232&quot;
+      msaez.io/x: &quot;436&quot;
+      msaez.io/DestinationRuleSubset_stable-v1: &quot;[[485,280],[432,280],[432,469]]&quot;
+      msaez.io/DestinationRuleSubset_canary-v1: &quot;[[536,328],[536,469]]&quot;
+  spec: 
+    hosts: 
+      - &quot;*&quot;
+    http: 
+      - 
+        name: &quot;&quot;
+        route: 
+          - 
+            destination: 
+              host: &quot;order&quot;
+        match: 
+          - 
+            uri: 
+              prefix: &quot;/&quot;
+        rewrite: 
+          uri: &quot;/&quot;
+    gateways: 
+      - &quot;main-gw&quot;
+
+
+---
+
+    ---
+
+  apiVersion: &quot;networking.istio.io/v1alpha3&quot;
+  kind: &quot;DestinationRule&quot;
+  metadata: 
+    name: &quot;&quot;
+    annotations: 
+      msaez.io/x: &quot;1254&quot;
+      msaez.io/y: &quot;121&quot;
+  spec: 
+    host: &quot;&quot;
+    subsets: []
+
+
+---
+
+    ---
+null
+
+
+---
+
+    ---
+
+  apiVersion: &quot;networking.istio.io/v1alpha3&quot;
+  kind: &quot;Gateway&quot;
+  metadata: 
+    name: &quot;main-gw&quot;
+    annotations: 
+      msaez.io/y: &quot;120&quot;
+      msaez.io/x: &quot;794&quot;
+      msaez.io/VirtualService_canary: &quot;[[536,156],[536,228]]&quot;
+  spec: 
+    selector: 
+      istio: &quot;ingressgateway&quot;
+    servers: 
+      - 
+        port: 
+          number: 80
+          name: &quot;http&quot;
+          protocol: &quot;HTTP&quot;
+        hosts: 
+          - &quot;*&quot;
+
+
+---
+
+    ---
+
+  apiVersion: &quot;networking.istio.io/v1alpha3&quot;
+  kind: &quot;DestinationRule&quot;
+  metadata: 
+    name: &quot;drule&quot;
+    annotations: 
+      msaez.io/y: &quot;271&quot;
+      msaez.io/x: &quot;1054&quot;
+      msaez.io/height: &quot;176&quot;
+  spec: 
+    host: &quot;&quot;
+    subsets: 
+      - 
+        name: &quot;stable-v1&quot;
+        labels: 
+          version: &quot;v1&quot;
+          app: &quot;order-stable&quot;
+      - 
+        name: &quot;canary-v1&quot;
+        labels: 
+          version: &quot;v1&quot;
+          app: &quot;order-canary&quot;
+
+
+---
+
+    ---
+null
+
+
+---
+
+    ---
+null
+
+
+---
+
+    ---
+null
+
+
+---
+
+    ---
+null
+
+
+---
+
+    ---
+null
+
+
+---
+
+    ---
+null
+
+
+---
+
+    ---
+
+  apiVersion: &quot;networking.istio.io/v1alpha3&quot;
+  kind: &quot;VirtualService&quot;
+  metadata: 
+    name: &quot;vsvc-order&quot;
+    annotations: 
+      msaez.io/x: &quot;474&quot;
+      msaez.io/y: &quot;236&quot;
+  spec: 
+    gateways: 
+      - &quot;main-gw&quot;
+    hosts: 
+      - &quot;*&quot;
+    http: 
+      - 
+        name: &quot;primary&quot;
+        route: 
+          - 
+            destination: 
+              host: &quot;order&quot;
+          - 
+            destination: 
+              host: &quot;order&quot;
+          - 
+            destination: 
+              host: &quot;order&quot;
+          - 
+            destination: 
+              host: &quot;order&quot;
+          - 
+            destination: 
+              host: &quot;order&quot;
+          - 
+            destination: 
+              host: &quot;order&quot;
+          - 
+            destination: 
+              host: &quot;order&quot;
+          - 
+            destination: 
+              host: &quot;order&quot;
+
+
+---
+
+    ---
+
+  apiVersion: &quot;networking.istio.io/v1alpha3&quot;
+  kind: &quot;VirtualService&quot;
+  metadata: 
+    name: &quot;vsvc-delivery&quot;
+    annotations: 
+      msaez.io/y: &quot;239&quot;
+      msaez.io/x: &quot;632&quot;
+      msaez.io/DestinationRuleSubset_stable-v1: &quot;[[485,280],[432,280],[432,469]]&quot;
+      msaez.io/DestinationRuleSubset_canary-v1: &quot;[[536,328],[536,469]]&quot;
+  spec: 
+    hosts: 
+      - &quot;*&quot;
+    http: 
+      - 
+        name: &quot;&quot;
+        route: 
+          - 
+            destination: 
+              host: &quot;delivery&quot;
+          - 
+            destination: 
+              host: &quot;delivery&quot;
+          - 
+            destination: 
+              host: &quot;delivery&quot;
+          - 
+            destination: 
+              host: &quot;delivery&quot;
+          - 
+            destination: 
+              host: &quot;delivery&quot;
+          - 
+            destination: 
+              host: &quot;delivery&quot;
+          - 
+            destination: 
+              host: &quot;delivery&quot;
+        match: 
+          - 
+            uri: 
+              prefix: &quot;/&quot;
+        rewrite: 
+          uri: &quot;/&quot;
+    gateways: 
+      - &quot;main-gw&quot;
+
+
+---
+
+    ---
+null
+
+
+---
+
+    ---
+
+  apiVersion: &quot;networking.istio.io/v1alpha3&quot;
+  kind: &quot;DestinationRule&quot;
+  metadata: 
+    name: &quot;&quot;
+    annotations: 
+      msaez.io/x: &quot;1023&quot;
+      msaez.io/y: &quot;240&quot;
+  spec: 
+    host: &quot;&quot;
+    subsets: 
+      - 
+        name: &quot;v1&quot;
+        labels: 
+          version: &quot;v1&quot;
+
+
+---
+
+    ---
+null
+
+
+---
+
+    ---
+
+  apiVersion: &quot;networking.istio.io/v1alpha3&quot;
+  kind: &quot;Gateway&quot;
+  metadata: 
+    name: &quot;main-gw&quot;
+    annotations: 
+      msaez.io/y: &quot;52&quot;
+      msaez.io/x: &quot;776&quot;
+      msaez.io/width: &quot;664&quot;
+  spec: 
+    selector: 
+      istio: &quot;ingressgateway&quot;
+    servers: 
+      - 
+        port: 
+          number: 80
+          name: &quot;&quot;
+          protocol: &quot;&quot;
+        hosts: 
+          - &quot;*&quot;
+
+
+---
+
+    ---
+
+  apiVersion: &quot;networking.istio.io/v1alpha3&quot;
+  kind: &quot;Gateway&quot;
+  metadata: 
+    name: &quot;main-gw&quot;
+    annotations: 
+      msaez.io/y: &quot;83&quot;
+      msaez.io/x: &quot;822&quot;
+      msaez.io/VirtualService_canary: &quot;[[536,156],[536,228]]&quot;
+  spec: 
+    selector: 
+      istio: &quot;ingressgateway&quot;
+    servers: 
+      - 
+        port: 
+          number: 80
+          name: &quot;http&quot;
+          protocol: &quot;HTTP&quot;
+        hosts: 
+          - &quot;*&quot;
+
+
+---
+
+    ---
+
+  apiVersion: &quot;networking.istio.io/v1alpha3&quot;
+  kind: &quot;DestinationRule&quot;
+  metadata: 
+    name: &quot;drule&quot;
+    annotations: 
+      msaez.io/y: &quot;210&quot;
+      msaez.io/x: &quot;1038&quot;
+      msaez.io/height: &quot;176&quot;
+  spec: 
+    host: &quot;&quot;
+    subsets: 
+      - 
+        name: &quot;stable-v1&quot;
+        labels: 
+          version: &quot;v1&quot;
+          app: &quot;order-stable&quot;
+      - 
+        name: &quot;canary-v1&quot;
+        labels: 
+          version: &quot;v1&quot;
+          app: &quot;order-canary&quot;
+
+
+---
+
+    ---
+null
+
+
+---
+
+    ---
+null
+
+
+---
+
+    ---
+
+  apiVersion: &quot;networking.istio.io/v1alpha3&quot;
+  kind: &quot;DestinationRule&quot;
+  metadata: 
+    name: &quot;&quot;
+    annotations: 
+      msaez.io/x: &quot;1076&quot;
+      msaez.io/y: &quot;207&quot;
+  spec: 
+    host: &quot;&quot;
+    subsets: 
+      - 
+        name: &quot;v1&quot;
+        labels: 
+          version: &quot;v1&quot;
+
+
+---
+
+    ---
+null
+
+
+---
+
+    ---
+
+  apiVersion: &quot;networking.istio.io/v1alpha3&quot;
+  kind: &quot;DestinationRule&quot;
+  metadata: 
+    name: &quot;drule-delivery&quot;
+    annotations: 
+      msaez.io/x: &quot;852&quot;
+      msaez.io/y: &quot;351&quot;
+  spec: 
+    host: &quot;&quot;
+    subsets: []
+
+
+---
+
+    ---
+null
+
+
+---
+
+    ---
+null
+
+
+---
+
+    ---
+
+  apiVersion: &quot;networking.istio.io/v1alpha3&quot;
+  kind: &quot;VirtualService&quot;
+  metadata: 
+    name: &quot;vsvc-product&quot;
+    annotations: 
+      msaez.io/y: &quot;234&quot;
+      msaez.io/x: &quot;1063&quot;
+      msaez.io/DestinationRuleSubset_stable-v1: &quot;[[485,280],[432,280],[432,469]]&quot;
+      msaez.io/DestinationRuleSubset_canary-v1: &quot;[[536,328],[536,469]]&quot;
+  spec: 
+    hosts: 
+      - &quot;*&quot;
+    http: 
+      - 
+        name: &quot;&quot;
+        route: 
+          - 
+            destination: 
+              host: &quot;&quot;
+              subset: &quot;stable-v1&quot;
+            weight: 80
+          - 
+            destination: 
+              host: &quot;&quot;
+              subset: &quot;canary-v1&quot;
+            weight: 20
+        match: 
+          - 
+            uri: 
+              prefix: &quot;/&quot;
+        rewrite: 
+          uri: &quot;/&quot;
+    gateways: 
+      - &quot;main-gw&quot;
+
+
+---
+
+    ---
+
+  apiVersion: &quot;networking.istio.io/v1alpha3&quot;
+  kind: &quot;Gateway&quot;
+  metadata: 
+    name: &quot;main-gw&quot;
+    annotations: 
+      msaez.io/y: &quot;26&quot;
+      msaez.io/x: &quot;1109&quot;
+      msaez.io/VirtualService_canary: &quot;[[536,156],[536,228]]&quot;
+  spec: 
+    selector: 
+      istio: &quot;ingressgateway&quot;
+    servers: 
+      - 
+        port: 
+          number: 80
+          name: &quot;http&quot;
+          protocol: &quot;HTTP&quot;
+        hosts: 
+          - &quot;*&quot;
+
+
+---
+
+    ---
+
+  apiVersion: &quot;networking.istio.io/v1alpha3&quot;
+  kind: &quot;DestinationRule&quot;
+  metadata: 
+    name: &quot;drule-product&quot;
+    annotations: 
+      msaez.io/y: &quot;349&quot;
+      msaez.io/x: &quot;1297&quot;
+      msaez.io/height: &quot;176&quot;
+  spec: 
+    host: &quot;&quot;
+    subsets: 
+      - 
+        name: &quot;v3&quot;
+        labels: 
+          version: &quot;v3&quot;
+      - 
+        name: &quot;v4&quot;
+        labels: 
+          version: &quot;v4&quot;
+
+
+---
+
+    ---
+null
+
+
+---
+
+    ---
+null
+
+
+---
+
+    ---
+null
+
+
+---
+
+    ---
+null
+
+
+---
+
+    ---
+null
+
+
+---
+
+    ---
+null
+
+
+---
+
+    ---
+
+  apiVersion: &quot;networking.k8s.io/v1&quot;
+  kind: &quot;Ingress&quot;
+  metadata: 
+    name: &quot;&quot;
+    annotations: 
+      kubernetes.io/ingress.class: &quot;nginx&quot;
+  spec: 
+    rules: []
+
+
+---
+
+    ---
+
+  apiVersion: &quot;autoscaling/v2&quot;
+  kind: &quot;HorizontalPodAutoscaler&quot;
+  metadata: 
+    name: &quot;&quot;
+    annotations: 
+      msaez.io/x: &quot;851&quot;
+      msaez.io/y: &quot;327&quot;
+  spec: 
+    scaleTargetRef: {}
+    minReplicas: 1
+    maxReplicas: 10
+    metrics: 
+      - 
+        type: &quot;Resource&quot;
+        resource: 
+          name: &quot;cpu&quot;
+          target: 
+            type: &quot;Utilization&quot;
+            averageUtilization: 50
+
+
+---
+
+
